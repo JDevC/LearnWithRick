@@ -1,0 +1,34 @@
+
+title.png
+size: 570,126
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+downloads
+  rotate: false
+  xy: 2, 86
+  size: 283, 40
+  orig: 283, 40
+  offset: 0, 0
+  index: -1
+load_game
+  rotate: false
+  xy: 2, 44
+  size: 283, 40
+  orig: 283, 40
+  offset: 0, 0
+  index: -1
+new_game
+  rotate: false
+  xy: 2, 2
+  size: 283, 40
+  orig: 283, 40
+  offset: 0, 0
+  index: -1
+options
+  rotate: false
+  xy: 287, 86
+  size: 283, 40
+  orig: 283, 40
+  offset: 0, 0
+  index: -1

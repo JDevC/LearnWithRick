@@ -1,0 +1,48 @@
+
+joypad.pack.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+flecha
+  rotate: false
+  xy: 2, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+jump
+  rotate: false
+  xy: 2, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+leftPad
+  rotate: false
+  xy: 260, 518
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+life_point
+  rotate: false
+  xy: 260, 452
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+lifeless_point
+  rotate: false
+  xy: 518, 710
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+shoot
+  rotate: false
+  xy: 2, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
