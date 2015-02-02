@@ -23,13 +23,13 @@ public class TextureSetup {
 		
 		if(pack == 1){ // Pantalla Juego
 			params[1] = "screens/game";
-			params[3] = "game.pack";
+			params[3] = "game";
 		}else if(pack == 2){ // Título
 			params[1] = "screens/title";
-			params[3] = "title.pack";
+            params[3] = "title";
 		}else if(pack == 3){ // Joypad
 			params[1] = "joypad";
-			params[3] = "joypad.pack";
+			params[3] = "joypad";
 		}else{
 			System.out.println("Paquete no válido");
 			System.exit(0);

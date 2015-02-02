@@ -8,9 +8,8 @@ import com.oddland.game.model.Rick;
 import com.oddland.game.model.Rick.State;
 import com.oddland.game.model.TizaLetal;
 import com.oddland.game.model.World;
-// Librer�a GDX
+// Librería GDX
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.graphics.Color;
@@ -33,8 +32,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class WorldRenderer{
 	/** Medidas de la cámara **/
-	private static final float	CAMERA_WIDTH = 10f; 				// Longitud de la cámara (96f = longitud total ; 10f = longitud adecuada)
-	private static final float	CAMERA_HEIGHT = 7f; 				// Altura de la cámara (23f = altura total ; 7f = altura adecuada)
+	public static final float	CAMERA_WIDTH = 10f; 				// Longitud de la cámara (96f = longitud total ; 10f = longitud adecuada)
+	public static final float	CAMERA_HEIGHT = 7f; 				// Altura de la cámara (23f = altura total ; 7f = altura adecuada)
 	private static final float	RUNNING_FRAME_DURATION = 0.08f; 	// Controla el tiempo de duración de los frames en el ciclo de carrera (0.06f)
 	private static final float	JUMPING_FRAME_DURATION = 0.2f; 	    // Controla el tiempo de duración de los frames en el ciclo de salto // 0.4f
 	
@@ -118,7 +117,7 @@ public class WorldRenderer{
 //	public void setDebug(boolean debug){ this.debug = debug; }
 	// Carga para cada objeto las texturas pertinentes desde el directorio escogido
 	private void loadTextures(){
-		joypad = new TextureAtlas(Gdx.files.internal("images/texturas/joypad.pack.atlas"));
+		joypad = new TextureAtlas(Gdx.files.internal("images/texturas/joypad.atlas"));
         // Agrega las texturas de los botones del joypad (sólo si la aplicación se ejecuta en Android)
 		if (Gdx.app.getType().equals(ApplicationType.Android)){
 			jumpButton = joypad.findRegion("jump");
@@ -130,7 +129,7 @@ public class WorldRenderer{
 		lifePoint = joypad.findRegion("life_point");
 		lifelessPoint = joypad.findRegion("lifeless_point");
 		// Carga el mapa de texturas
-		atlas = new TextureAtlas(Gdx.files.internal("images/texturas/game.pack.atlas"));
+		atlas = new TextureAtlas(Gdx.files.internal("images/texturas/game.atlas"));
 		// Textura de terreno
 		blockTexture = atlas.findRegion("block");
 		// Textura de puntos de control

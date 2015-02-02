@@ -193,6 +193,6 @@ public class Level {
 		// Potes de vida
 		pots[70][39] = new PotLife(new Vector2(70,39)); // 2, 39
 		// Tizas letales
-		tizasLetales[2][39] = new TizaLetal(new Vector2(2,39));
+		tizasLetales[4][39] = new TizaLetal(new Vector2(4,39));
 	}
 }

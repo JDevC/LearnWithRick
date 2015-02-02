@@ -1,6 +1,5 @@
 package com.oddland.game.controller;
 // Librerías propias
-import com.badlogic.gdx.math.Vector2;
 import com.oddland.game.model.Abyss;
 import com.oddland.game.model.PotLife;
 import com.oddland.game.model.RespawnPoint;
@@ -9,16 +8,17 @@ import com.oddland.game.model.TizaLetal;
 import com.oddland.game.model.Rick.State;
 import com.oddland.game.model.World;
 import com.oddland.game.model.Block;
-// Librer�as GDX
+// Librerías GDX
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Array;
-// Librer�as Java
+import com.oddland.game.view.WorldRenderer;
+// Librerías Java
 import java.util.HashMap;
 import java.util.Map;
 
 public class RickController{
-	// Definici�n de los controles de Rick
+	// Definición de los controles de Rick
 	enum Keys{
 		LEFT, RIGHT, JUMP, FIRE
 	}
@@ -47,7 +47,7 @@ public class RickController{
 		keys.put(Keys.RIGHT, false);
 		keys.put(Keys.JUMP, false);
 		keys.put(Keys.FIRE, false);
-	};
+	}
 	// Array de colisionadores (bloques) con los que Rick puede chocar
 	private Array<Block> collidableBlocks = new Array<Block>();
 	// Array de colisionadores (abismos) con los que Rick puede chocar
@@ -61,13 +61,13 @@ public class RickController{
 	// CONSTRUCTOR ------------------------------------------------------------------------------------------------------------------------
 	public RickController(World world){
 		this.world = world;
-		this.rick = world.getRick();
+		this.rick = this.world.getRick();
 	}
     // METODOS ----------------------------------------------------------------------------------------------------------------------------
     // getters
-    public Array<TizaLetal> getCollidableTizas(){
-        return this.collidableTizas;
-    }
+//    public Array<TizaLetal> getCollidableTizas(){
+//        return this.collidableTizas;
+//    }
 	// ** Key presses and touches **************** //
 	public void leftPressed(){
 		keys.get(keys.put(Keys.LEFT, true));
@@ -102,11 +102,11 @@ public class RickController{
 		if (grounded && rick.getState().equals(State.JUMPING)){
 			rick.setState(State.IDLE);
 		}
-		// Asignamos un vector de aceleración gravitacional
+		// Asignamos un valor de aceleración gravitacional
 		rick.getAcceleration().y = GRAVITY;
 		// Convierte dicha aceleración a frames
 		rick.getAcceleration().scl(delta); // <-------------------------------------------- rick.getAcceleration().mul(delta);
-		// apply acceleration to change velocity
+		// Se aplica la aceleración para aumentar su velocidad
 		rick.getVelocity().add(rick.getAcceleration().x, rick.getAcceleration().y);
 		// Comprueba si hay colisión dependiendo de la velocidad de Rick
 		checkCollisionWithBlocks(delta);
@@ -114,7 +114,7 @@ public class RickController{
 		rick.getVelocity().x *= DAMP;
         /* Suprime el efecto de damping en velocidades inapreciables. Esto
          * logra que el vector de velocidad en x se inicialice siempre desde cero,
-         * con la intención de prevenir errores de interpretación
+         * con la intención de prevenir errores de ejecución
          */
         if(Math.abs(rick.getVelocity().x) < 0.002 && rick.getState()==State.IDLE){
             rick.getVelocity().x = 0;
@@ -131,13 +131,36 @@ public class RickController{
 		if(rick.getVelocity().x < -MAX_VEL){
 			rick.getVelocity().x = -MAX_VEL;
 		}
+        for(TizaLetal t: world.getDrawableTizas((int)WorldRenderer.CAMERA_WIDTH,(int)WorldRenderer.CAMERA_HEIGHT)){
+            if(t.isTurnDir()){
+                t.getAcceleration().x = 10f;
+            }else{
+                t.getAcceleration().x = -10f;
+            }
+            t.getAcceleration().y = 0f;
+
+            System.out.print("AB: "+t.getAcceleration()+"; ");
+            t.getAcceleration().scl(delta);
+            System.out.println("AA: "+t.getAcceleration());
+
+            t.getVelocity().add(t.getAcceleration().x, t.getAcceleration().y);
+            t.getVelocity().scl(delta);
+            t.getPosition().add(t.getVelocity());
+            t.getBounds().x = t.getPosition().x;
+            t.getBounds().y = t.getPosition().y;
+            // Devuelve el formato original al vector de velocidad (not in frame time)
+            t.getVelocity().scl(1 / delta);
+            if(t.getVelocity().x > 2f){
+                t.getVelocity().x = 2f;
+            }
+            if(t.getVelocity().x < -2f){
+                t.getVelocity().x = -2f;
+            }
+            t.update(delta);
+            System.out.println("X: "+t.getPosition().x+"; Y: "+t.getPosition().y);
+        }
 		// Actualiza el estado de Rick
 		rick.update(delta);
-        if(collidableTizas != null) {
-            for (TizaLetal tiza : collidableTizas) {
-                tiza.update(delta);
-            }
-        }
 	}
 	/** Comprobación de colisiones **/
 	private void checkCollisionWithBlocks(float delta){
@@ -158,7 +181,7 @@ public class RickController{
 		}else{
 			startX = endX = (int) Math.floor(rick.getBounds().x + rick.getBounds().width + rick.getVelocity().x);
 		}
-		// Obtiene los objetos con los que podr�a colisionar Rick
+		// Obtiene los objetos con los que podría colisionar Rick
 		populateColliders(startX, startY, endX, endY);
 		// Simula el movimiento de Rick en el eje X
 		rickRect.x += rick.getVelocity().x;
@@ -166,7 +189,6 @@ public class RickController{
 		world.getCollisionRects().clear();
 		// Si Rick colisiona con bloques, deja su velocidad horizontal a 0
 		for(Block block : collidableBlocks){
-//			if(block == null) continue;
 			if(block == null || !block.isCollidable()){ continue; }
 			if(rickRect.overlaps(block.getBounds())){
 				rick.getVelocity().x = 0;
@@ -189,7 +211,7 @@ public class RickController{
 			if(rickRect.overlaps(pot.getBounds())){
 				if(rick.getLife() < rick.getMaxLife()){
 					rick.increaseLife();
-				}				
+				}
 				world.getLevel().crashPot((int)pot.getPosition().x, (int)pot.getPosition().y);
 				world.getCollisionRects().add(pot.getBounds());
 				break;
@@ -197,7 +219,7 @@ public class RickController{
 		}
 		// Si Rick colisiona con tiza letal, pierde un punto de vida
 		for(TizaLetal tiza : collidableTizas){
-			if(tiza == null){ continue; }
+            if(tiza == null){ continue; }
 			if(rickRect.overlaps(tiza.getBounds())){
 				if(rick.getLife() > 0){
 					rick.decreaseLife();
@@ -228,7 +250,7 @@ public class RickController{
 				}
 				rick.getVelocity().y = 0;
 				world.getCollisionRects().add(block.getBounds());
-			break;
+			    break;
 			}
 		}
 		// Comprueba colisiones con abismos (huecos)
@@ -236,8 +258,7 @@ public class RickController{
 			if(abyss == null){ continue; }
 			if(rickRect.overlaps(abyss.getBounds())){
 				// PTR (Pequeño Tumor Reparabugs)
-				if(abyss.getPosition().x == 93 &&
-						abyss.getPosition().y == 1){
+				if(abyss.getPosition().x == 93 && abyss.getPosition().y == 1){
                     rick.getAcceleration().y = 0;
                     rick.getVelocity().y = 0;
 					rick.getPosition().x = world.getLevel().getSpawnX();

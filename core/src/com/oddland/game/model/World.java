@@ -1,6 +1,4 @@
 package com.oddland.game.model;
-// Librerías propias
-import com.oddland.game.model.Level;
 // Librerías GDX
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -11,14 +9,13 @@ import java.util.List;
 
 public class World{
 
-	Array<Block> terrain = new Array<Block>();					// Array de bloques que conformarán el terreno
-	Rick rick;													// Personaje jugable
-	Level level;												// Nivel actual
+	Array<Block> terrain = new Array<Block>();				// Array de bloques que conformarán el terreno
+	Rick rick;											// Personaje jugable
+	Level level;										// Nivel actual
 	Array<Rectangle> collisionRects = new Array<Rectangle>();	// Array de colisionadores
 	// CONSTRUCTOR --------------------------------------------------------------------------
 	public World(){ createDemoWorld(); }
 	// MÉTODOS ------------------------------------------------------------------------------
-	public Array<Block> getBlocks(){ return terrain; }	
 	public Array<Rectangle> getCollisionRects(){ return collisionRects; }	
 	public Rick getRick(){ return rick; }	
 	public Level getLevel(){ return level; }
@@ -191,7 +188,7 @@ public class World{
 	private void createDemoWorld() {
 		// Carga el nivel
 		level = new Level();
-		// Sit�a al jugador en el inicio
+		// Sitúa al jugador en el inicio
 		rick = new Rick(new Vector2(level.getSpawnX(), level.getSpawnY()));		
 	}
 }

@@ -42,8 +42,6 @@ public class TitleRenderer {
 	// Getters
 	public float getPpuX(){ return this.ppuX; }
 	public float getPpuY(){ return this.ppuY; }
-	public float getNewGameX(){ return this.newGameX; }
-	public float getNewGameY(){ return this.newGameY; }
 	// (Re)calcula las unidades en píxels cada vez que la pantalla cambia de tamaño
 	public void setSize (int w, int h){
 		this.width = w;
@@ -60,7 +58,7 @@ public class TitleRenderer {
 	// Carga para cada objeto las texturas pertinentes desde el directorio escogido
 	private void loadTextures(){
 		// Agrega las texturas de los botones
-		title = new TextureAtlas(Gdx.files.internal("images/texturas/title.pack"));
+		title = new TextureAtlas(Gdx.files.internal("images/texturas/title.atlas"));
 		newGame = title.findRegion("new_game");
 		loadGame = title.findRegion("load_game");
 		options = title.findRegion("options");

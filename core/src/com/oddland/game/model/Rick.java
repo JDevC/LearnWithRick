@@ -86,10 +86,13 @@ public class Rick{
         if(getState().equals(State.WALKING)){
             this.runStateTime += delta;
         }
+        // Control de tiempos en el salto (necesario para la animación)
         if(getState().equals(State.JUMPING) && getVelocity().y > 0.5){
             this.fallStateTime = 0;
             this.jumpStateTime += delta;
-        }else if(getState().equals(State.JUMPING) && getVelocity().y < 0){
+        }
+        // Control de tiempos en la caída (necesario para la animación)
+        else if(getState().equals(State.JUMPING) && getVelocity().y < 0){
             this.jumpStateTime = 0;
             this.fallStateTime += delta;
         }

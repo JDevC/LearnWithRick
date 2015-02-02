@@ -50,23 +50,31 @@ public class TizaLetal {
 	public void setStateTime(float stateTime){ this.stateTime = stateTime; }
 	// Comprobadores
 	public boolean isFacingLeft(){ return this.facingLeft; }
+    public boolean isTurnDir(){ return this.turnDir; }
 	// Método principal
 	public void update(float delta){
 		this.stateTime += delta;
-        if(stateTime % 2 != 0){
+//        System.out.println("timer: "+this.stateTime);
+        if((stateTime - (int)stateTime != 0) && ((int)stateTime % 2 != 0)){
+//            System.out.print("Camino a: ");
             if(turnDir){
-                this.position.x += 1f;
-                this.bounds.setX(position.x);
+//                System.out.println("Derecha");
             }else{
-                this.position.x -= 1f;
-                this.bounds.setX(position.x);
+//                System.out.println("Izquierda");
             }
         }else{
             if(turnDir){
+//                System.out.println("Giro a Izquierda");
                 this.turnDir = false;
             }else{
+//                System.out.println("Giro a Derecha");
                 this.turnDir = true;
             }
+            stateTime += 0.1;
         }
-	}
+//        System.out.print("AX:"+getAcceleration().x+"; ");
+//        System.out.print("AY:"+getAcceleration().y+"; ");
+//        System.out.print("VX:"+getVelocity().x+"; ");
+//        System.out.println("VY:"+getVelocity().y);
+    }
 }

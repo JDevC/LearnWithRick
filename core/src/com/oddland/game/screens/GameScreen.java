@@ -21,25 +21,25 @@ public class GameScreen implements Screen, InputProcessor{
 	private WorldRenderer 	renderer;		// Renderizador de la pantalla
 	private RickController	controller;		// Controlador del personaje
 //	private OrthographicCamera cam;			// Cámara de la pantalla
-	private int 			width, height;	// Altura y longitud de pantalla empleadas por los eventos t�ctiles de Android
+	private int 			width, height;	// Altura y longitud de pantalla empleadas por los eventos táctiles de Android
 	// CONSTRUCTOR
 	public GameScreen(LearnWithRick lwr){
 		this.lwr = lwr;
 	}
-	// M�todos de la pantalla de juego (Screen) ------------------------------------------------------------------
+	// Métodos de la pantalla de juego (Screen) ------------------------------------------------------------------
 	@Override
 	public void render(float delta){
-		// Limpian la pantalla poni�ndola en negro		
+		// Limpian la pantalla poniéndola en negro
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // Actualiza el controlador
+        controller.update(delta);
 		// Llamada al método render() de la clase WorldRenderer
 		renderer.render();
-		// Actualiza el controlador
-		controller.update(delta);
-		/* Nota: El par�metro "delta" no lo generamos nosotros, ni le asignamos valor.
-		 * Se trata de un par�metro variable en funci�n de los fps que sea capaz de procesar
+		/* Nota: El parámetro "delta" no lo generamos nosotros, ni le asignamos valor.
+		 * Se trata de un parámetro variable en función de los fps que sea capaz de procesar
 		 * el dispositivo en el que estemos ejecutando el juego, de forma que funcione a 
-		 * la misma velocidad en ambos. La �nica diferencia perceptible ser� una mayor
+		 * la misma velocidad en ambos. La única diferencia perceptible será una mayor
 		 * fluidez de movimiento en dispositivos con mayor capacidad de procesamiento
 		 *  
 		 * */
@@ -56,7 +56,7 @@ public class GameScreen implements Screen, InputProcessor{
 	// Método llamado cuando LearnWithRick activa la pantalla actual
 	public void show() {
 		world = /* Brave */new World(); 			// Eddie approves it
-		renderer = new WorldRenderer(world, false); // true/false = muestra/oculta rejillas de objetos en pantalla (debug)
+		renderer = new WorldRenderer(world, true); // true/false = muestra/oculta rejillas de objetos en pantalla (debug)
 		controller = new RickController(world);		// Se asigna el controlador al mundo que muestra la pantalla
 		Gdx.input.setInputProcessor(this);
 		world.getLevel().getMusic().play();			// Se inicia la reproducción del fondo musical
