@@ -132,16 +132,13 @@ public class RickController{
 			rick.getVelocity().x = -MAX_VEL;
 		}
         for(TizaLetal t: world.getDrawableTizas((int)WorldRenderer.CAMERA_WIDTH,(int)WorldRenderer.CAMERA_HEIGHT)){
-            if(t.isTurnDir()){
+            if(t.isFacingLeft()){
                 t.getAcceleration().x = 10f;
             }else{
                 t.getAcceleration().x = -10f;
             }
             t.getAcceleration().y = 0f;
-
-            System.out.print("AB: "+t.getAcceleration()+"; ");
             t.getAcceleration().scl(delta);
-            System.out.println("AA: "+t.getAcceleration());
 
             t.getVelocity().add(t.getAcceleration().x, t.getAcceleration().y);
             t.getVelocity().scl(delta);
@@ -157,7 +154,6 @@ public class RickController{
                 t.getVelocity().x = -2f;
             }
             t.update(delta);
-            System.out.println("X: "+t.getPosition().x+"; Y: "+t.getPosition().y);
         }
 		// Actualiza el estado de Rick
 		rick.update(delta);
@@ -240,6 +236,7 @@ public class RickController{
 			startY = endY = (int) Math.floor(rick.getBounds().y + rick.getBounds().height + rick.getVelocity().y);
 		}
 		populateColliders(startX, startY, endX, endY);
+        // Simula el movimiento de Rick en el eje Y
 		rickRect.y += rick.getVelocity().y;
 		// Comprueba colisiones con bloques
 		for(Block block : collidableBlocks) {

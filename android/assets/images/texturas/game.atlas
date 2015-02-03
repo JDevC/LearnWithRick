@@ -1,61 +1,61 @@
 
 game.png
-size: 1024,512
+size: 1024,256
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 Rick
   rotate: false
-  xy: 456, 407
+  xy: 2, 151
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
 RickCorrer2
   rotate: false
-  xy: 456, 308
+  xy: 2, 52
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
 RickCorrer3
   rotate: false
-  xy: 538, 407
+  xy: 84, 151
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
 RickCorrer4
   rotate: false
-  xy: 456, 209
+  xy: 84, 52
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
 RickCorrer5
   rotate: false
-  xy: 538, 308
+  xy: 166, 151
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
 RickCorrer6
   rotate: false
-  xy: 620, 407
+  xy: 166, 52
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
 RickCorrer7
   rotate: false
-  xy: 456, 110
+  xy: 248, 151
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
 RickCorrer8
   rotate: false
-  xy: 538, 209
+  xy: 248, 52
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
@@ -69,78 +69,99 @@ block
   index: -1
 pot
   rotate: false
-  xy: 620, 143
+  xy: 716, 184
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 respawn
   rotate: false
-  xy: 456, 68
+  xy: 716, 142
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 rickDisparo
   rotate: false
-  xy: 620, 308
+  xy: 330, 151
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
 saltoRick1
   rotate: false
-  xy: 702, 310
+  xy: 494, 153
   size: 80, 95
   orig: 80, 95
   offset: 0, 0
   index: -1
 saltoRick7
   rotate: false
-  xy: 702, 310
+  xy: 494, 153
   size: 80, 95
   orig: 80, 95
   offset: 0, 0
   index: -1
 saltoRick2
   rotate: false
-  xy: 784, 409
+  xy: 494, 56
   size: 80, 95
   orig: 80, 95
   offset: 0, 0
   index: -1
 saltoRick6
   rotate: false
-  xy: 784, 409
+  xy: 494, 56
   size: 80, 95
   orig: 80, 95
   offset: 0, 0
   index: -1
 saltoRick3
   rotate: false
-  xy: 702, 407
+  xy: 330, 52
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
 saltoRick4
   rotate: false
-  xy: 538, 110
+  xy: 412, 151
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
 saltoRick5
   rotate: false
-  xy: 620, 209
+  xy: 412, 52
   size: 80, 97
   orig: 80, 97
   offset: 0, 0
   index: -1
-tizaletal
+tizaLetal1
   rotate: false
-  xy: 2, 52
-  size: 452, 452
-  orig: 452, 452
+  xy: 576, 165
+  size: 68, 83
+  orig: 68, 83
+  offset: 0, 0
+  index: -1
+tizaLetal2
+  rotate: false
+  xy: 576, 80
+  size: 68, 83
+  orig: 68, 83
+  offset: 0, 0
+  index: -1
+tizaLetal3
+  rotate: false
+  xy: 646, 165
+  size: 68, 83
+  orig: 68, 83
+  offset: 0, 0
+  index: -1
+tizaLetal4
+  rotate: false
+  xy: 646, 80
+  size: 68, 83
+  orig: 68, 83
   offset: 0, 0
   index: -1

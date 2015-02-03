@@ -16,7 +16,6 @@ public class TizaLetal {
 	private Rectangle 	bounds = new Rectangle();		// Área de colisión
 	private State		state = State.IDLE;				// Estado del personaje
 	private boolean		facingLeft = true;				// Orientación en pantalla del personaje
-    private boolean     turnDir = true;
 	private float		stateTime = 0;					//
 	// CONSTRUCTOR --------------------------------------------------------------------------------------------
 	public TizaLetal(Vector2 position){
@@ -50,25 +49,24 @@ public class TizaLetal {
 	public void setStateTime(float stateTime){ this.stateTime = stateTime; }
 	// Comprobadores
 	public boolean isFacingLeft(){ return this.facingLeft; }
-    public boolean isTurnDir(){ return this.turnDir; }
 	// Método principal
 	public void update(float delta){
 		this.stateTime += delta;
 //        System.out.println("timer: "+this.stateTime);
         if((stateTime - (int)stateTime != 0) && ((int)stateTime % 2 != 0)){
 //            System.out.print("Camino a: ");
-            if(turnDir){
+            if(facingLeft){
 //                System.out.println("Derecha");
             }else{
 //                System.out.println("Izquierda");
             }
         }else{
-            if(turnDir){
+            if(facingLeft){
 //                System.out.println("Giro a Izquierda");
-                this.turnDir = false;
+                this.facingLeft = false;
             }else{
 //                System.out.println("Giro a Derecha");
-                this.turnDir = true;
+                this.facingLeft = true;
             }
             stateTime += 0.1;
         }

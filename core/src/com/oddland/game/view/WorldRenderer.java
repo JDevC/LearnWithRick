@@ -36,6 +36,7 @@ public class WorldRenderer{
 	public static final float	CAMERA_HEIGHT = 7f; 				// Altura de la cámara (23f = altura total ; 7f = altura adecuada)
 	private static final float	RUNNING_FRAME_DURATION = 0.08f; 	// Controla el tiempo de duración de los frames en el ciclo de carrera (0.06f)
 	private static final float	JUMPING_FRAME_DURATION = 0.2f; 	    // Controla el tiempo de duración de los frames en el ciclo de salto // 0.4f
+    private static final float	TIZA_FRAME_DURATION = 0.2f; 	    // Controla el tiempo de duración de los frames en el ciclo de salto // 0.4f
 	
 	/** Variables del mundo y la cámara **/
 	private World 				world;
@@ -48,11 +49,12 @@ public class WorldRenderer{
 	
 	/** Texturas **/
 	private Texture				background;								        // Fondo gráfico de la pantalla
-	private TextureRegion 		rickFrame; 								        // TextureRegion a renderizar en el momento actual
+	private TextureRegion 		rickFrame; 								        // TextureRegion de Rick a renderizar en el momento actual
+    private TextureRegion       tizaFrame;                                      // TextureRegion de Tiza Letal a renderizar en el momento actual
 	private TextureRegion 		blockTexture;							        // Bloques
 	private TextureRegion		checkPoint;								        // Puntos de control
 	private TextureRegion		potTxt;									        // Potes de vida
-	private TextureRegion		tizaTxt;								        // Tizas letales
+//	private TextureRegion		tizaTxt;								        // Tizas letales
 	private TextureRegion 		rickIdleLeft, rickIdleRight,                    // Texturas de Rick estático
                                 rickShootIdleLeft,                              // Estático disparando hacia la izquierda
                                 rickShootIdleRight;			                    // Estático disparando hacia la derecha
@@ -63,6 +65,7 @@ public class WorldRenderer{
                                 shootJumpLeftFrames,                            // Rick en disparo y salto simultáneos hacia la izquierda
                                 shootFallRightFrames,                           // Rick en disparo y caída simultáneos hacia la derecha
                                 shootFallLeftFrames;                            // Rick en disparo y caída simultáneos hacia la izquierda
+    private TextureRegion[]     tizaIzdaTxt, tizaDchaTxt;                       // Tiza en movimiento
 	private TextureRegion		arrowLeft, arrowRight, jumpButton, shootButton; // Joypad
 	private TextureRegion		lifePoint, lifelessPoint;				        // Puntos de vida
 	private TextureAtlas		atlas, joypad;							        // Mapas de texturas del juego
@@ -71,6 +74,7 @@ public class WorldRenderer{
 	private Animation 			walkLeftAnimation, walkRightAnimation;	// Animaciones de Rick en carrera
 	private Animation 			jumpLeftAnimation, jumpRightAnimation;	// Animaciones de Rick en salto
 	private Animation			fallLeftAnimation, fallRightAnimation;	// Animaciones de Rick en caída
+    private Animation 			tizaLeftAnimation, tizaRightAnimation;	// Animaciones de tiza
 	private SpriteBatch 		batch; 									// Se encarga del mapeado e impresión de los objetos del juego
 	private boolean 			debug = false; 							// Estado para determinar si se muestran las áreas de colisión o no
 	
@@ -136,17 +140,28 @@ public class WorldRenderer{
 		checkPoint = atlas.findRegion("respawn");
 		// Textura de potes de vida
 		potTxt = atlas.findRegion("pot");
-		// Textura de tizas letales
-		tizaTxt = atlas.findRegion("tizaletal");
-		// Texturas de Rick en reposo
+		// TEXTURAS: TIZAS LETALES ---------------------------------------------------------------------------------------
+//		tizaTxt = atlas.findRegion("tizaLetal1");
+        tizaDchaTxt = new TextureRegion[4];
+        for(int i = 0; i < tizaDchaTxt.length; i++){
+            tizaDchaTxt[i] = atlas.findRegion("tizaLetal" + (i+1));
+        }
+        tizaIzdaTxt = new TextureRegion[4];
+        for(int i = 0; i < tizaIzdaTxt.length; i++){
+            tizaIzdaTxt[i] = new TextureRegion(tizaDchaTxt[i]);
+            tizaIzdaTxt[i].flip(true, false);
+        }
+        tizaRightAnimation = new Animation(TIZA_FRAME_DURATION, tizaDchaTxt);
+        tizaLeftAnimation = new Animation(TIZA_FRAME_DURATION, tizaIzdaTxt);
+		// TEXTURAS: RICK ------------------------------------------------------------------------------------------------
 		rickIdleRight = atlas.findRegion("Rick");
 		rickIdleLeft = new TextureRegion(rickIdleRight);
 		rickIdleLeft.flip(true, false);
-        // Texturas de Rick disparando en reposo
+        // Texturas de Rick disparando en reposo -------------------------------------------------------------------------
         rickShootIdleRight = atlas.findRegion("rickDisparo");
         rickShootIdleLeft = new TextureRegion(rickShootIdleRight);
         rickShootIdleLeft.flip(true, false);
-		// Texturas de Rick en salto y caída
+		// Texturas de Rick en salto y caída -----------------------------------------------------------------------------
 		jumpRightFrames = new TextureRegion[3];
 		for(int i = 0; i < jumpRightFrames.length; i++){
 			jumpRightFrames[i] = atlas.findRegion("saltoRick" + (i+1));
@@ -169,21 +184,23 @@ public class WorldRenderer{
 		jumpRightAnimation = new Animation(JUMPING_FRAME_DURATION, jumpRightFrames);
 		fallLeftAnimation = new Animation(JUMPING_FRAME_DURATION, fallLeftFrames);
 		fallRightAnimation = new Animation(JUMPING_FRAME_DURATION, fallRightFrames);
-		
-		// Texturas de Rick corriendo hacia la derecha, y animación
-		walkRightFrames = new TextureRegion[7];
+		// Texturas de Rick corriendo hacia la derecha, y animación -------------------------------------------------------
+//		walkRightFrames = new TextureRegion[7];
+        walkRightFrames = new TextureRegion[6];
 		for(int i = 0; i < walkRightFrames.length; i++){
-			walkRightFrames[i] = atlas.findRegion("RickCorrer" + (i + 2));
+//			walkRightFrames[i] = atlas.findRegion("RickCorrer" + (i + 2));
+            walkRightFrames[i] = atlas.findRegion("RickCorrer" + (i + 3));
 		}
 		walkRightAnimation = new Animation(RUNNING_FRAME_DURATION, walkRightFrames);
 		// Texturas de Rick corriendo hacia la izquierda, y animación
-		walkLeftFrames = new TextureRegion[7];
+//		walkLeftFrames = new TextureRegion[7];
+        walkLeftFrames = new TextureRegion[6];
 		for(int i = 0; i < walkLeftFrames.length; i++){
 			walkLeftFrames[i] = new TextureRegion(walkRightFrames[i]);
 			walkLeftFrames[i].flip(true, false);
 		}
 		walkLeftAnimation = new Animation(RUNNING_FRAME_DURATION, walkLeftFrames);
-		// Carga del fondo gráfico
+		// TEXTURAS: FONDO DE PANTALLA -------------------------------------------------------------------------------------
 		background = new Texture(Gdx.files.internal("images/background.jpg"));
 	}
 	// Método principal de la clase, llamado desde el método "render" de la clase "GameScreen"
@@ -272,7 +289,9 @@ public class WorldRenderer{
 	// Dibuja las tizas asesinas
 	private void drawTizas(){
 		for(TizaLetal tiza : world.getDrawableTizas((int)CAMERA_WIDTH, (int)CAMERA_HEIGHT)){
-			batch.draw(tizaTxt, tiza.getPosition().x, tiza.getPosition().y, tiza.getBounds().width, tiza.getBounds().height);
+//			batch.draw(tizaTxt, tiza.getPosition().x, tiza.getPosition().y, tiza.getBounds().width, tiza.getBounds().height);
+            tizaFrame = tiza.isFacingLeft() ? tizaRightAnimation.getKeyFrame(tiza.getStateTime(), true) : tizaLeftAnimation.getKeyFrame(tiza.getStateTime(), true);
+            batch.draw(tizaFrame, tiza.getPosition().x, tiza.getPosition().y, tiza.getBounds().width, tiza.getBounds().height);
 		}
 	}
 	// Dibuja al personaje jugable
