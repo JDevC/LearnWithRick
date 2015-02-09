@@ -61,6 +61,7 @@ public class WorldRenderer{
 	private TextureRegion[] 	walkRightFrames, walkLeftFrames,		        // Rick en carrera
 								jumpRightFrames, jumpLeftFrames,		        // Rick en salto
 								fallRightFrames, fallLeftFrames,                // Rick en caída
+                                shootWalkRightFrames, shootWaltLeftFrames,      // Rick disparando mientras corre
                                 shootJumpRightFrames,                           // Rick en disparo y salto simultáneos hacia la derecha
                                 shootJumpLeftFrames,                            // Rick en disparo y salto simultáneos hacia la izquierda
                                 shootFallRightFrames,                           // Rick en disparo y caída simultáneos hacia la derecha
@@ -72,8 +73,11 @@ public class WorldRenderer{
 	
 	/** Animaciones **/
 	private Animation 			walkLeftAnimation, walkRightAnimation;	// Animaciones de Rick en carrera
+    private Animation           shootWaltLeftAnimation, shootWalkRightAnimation; //Animaciones de Rick disparando mientras camina
 	private Animation 			jumpLeftAnimation, jumpRightAnimation;	// Animaciones de Rick en salto
 	private Animation			fallLeftAnimation, fallRightAnimation;	// Animaciones de Rick en caída
+    private Animation           shootJumpLeftAnimation, shootJumpRightAnimation; // animaciones de Rick disparando en salto
+    private Animation           shootFallLeftAnimation, shootFallRightAnimation; //animaciones de Rick disparando en caida
     private Animation 			tizaLeftAnimation, tizaRightAnimation;	// Animaciones de tiza
 	private SpriteBatch 		batch; 									// Se encarga del mapeado e impresión de los objetos del juego
 	private boolean 			debug = false; 							// Estado para determinar si se muestran las áreas de colisión o no
@@ -200,7 +204,50 @@ public class WorldRenderer{
 			walkLeftFrames[i].flip(true, false);
 		}
 		walkLeftAnimation = new Animation(RUNNING_FRAME_DURATION, walkLeftFrames);
-		// TEXTURAS: FONDO DE PANTALLA -------------------------------------------------------------------------------------
+
+        //Texturas de Rick corriendo hacia la derecha disparando y animacion ------------------------------------------------
+        shootWalkRightFrames = new TextureRegion[6];
+        for(int i = 0; i < shootWalkRightFrames.length;i++){
+            shootWalkRightFrames[i] = atlas.findRegion("rickCorrerDisparo"+(i+3));
+        }
+        shootWalkRightAnimation = new Animation(RUNNING_FRAME_DURATION, shootWalkRightFrames);
+
+        //Texturas de Rick corriendo hacia la izquierda disparando y animacion--------------------------------------------
+        shootWaltLeftFrames = new TextureRegion[6];
+        for (int i = 0; i < shootWaltLeftFrames.length; i++) {
+            shootWaltLeftFrames[i] = new TextureRegion(shootWalkRightFrames[i]);
+            shootWaltLeftFrames[i].flip(true,false);
+        }
+        shootWaltLeftAnimation = new Animation(RUNNING_FRAME_DURATION, shootWaltLeftFrames);
+
+        //
+
+        shootJumpRightFrames = new TextureRegion[3];
+        for(int i = 0; i < shootJumpRightFrames.length; i++){
+            shootJumpRightFrames[i] = atlas.findRegion("saltoRickDisparo" + (i+1));
+        }
+        shootFallRightFrames = new TextureRegion[4];
+        for(int i = 0; i < shootFallRightFrames.length; i++){
+            shootFallRightFrames[i] = atlas.findRegion("saltoRickDisparo" + (i+4));
+        }
+        shootJumpLeftFrames = new TextureRegion[3];
+        for(int i = 0; i < shootJumpLeftFrames.length; i++){
+            shootJumpLeftFrames[i] = new TextureRegion(shootJumpRightFrames[i]);
+            shootJumpLeftFrames[i].flip(true, false);
+        }
+        shootFallLeftFrames = new TextureRegion[4];
+        for(int i = 0; i < shootFallLeftFrames.length; i++){
+            shootFallLeftFrames[i] = new TextureRegion(shootFallRightFrames[i]);
+            shootFallLeftFrames[i].flip(true, false);
+        }
+        shootJumpLeftAnimation = new Animation(JUMPING_FRAME_DURATION, jumpLeftFrames);
+        shootJumpRightAnimation = new Animation(JUMPING_FRAME_DURATION, jumpRightFrames);
+        shootFallLeftAnimation = new Animation(JUMPING_FRAME_DURATION, fallLeftFrames);
+        shootFallRightAnimation = new Animation(JUMPING_FRAME_DURATION, fallRightFrames);
+
+
+
+        // TEXTURAS: FONDO DE PANTALLA -------------------------------------------------------------------------------------
 		background = new Texture(Gdx.files.internal("images/background.jpg"));
 	}
 	// Método principal de la clase, llamado desde el método "render" de la clase "GameScreen"
@@ -298,11 +345,16 @@ public class WorldRenderer{
 	private void drawRick(){
 		Rick rick = world.getRick();
         if(rick.getState().equals(State.SHOOTING)){
-            rickFrame = rick.isFacingLeft() ? rickShootIdleLeft : rickShootIdleRight;
+            rickFrame = rick.isFacingLeft() ? shootWaltLeftAnimation.getKeyFrame(rick.getShootStateTime(), true)
+                    : shootWalkRightAnimation.getKeyFrame(rick.getShootStateTime(),true);
         }else if(rick.getState().equals(State.IDLE)){
             rickFrame = rick.isFacingLeft() ? rickIdleLeft : rickIdleRight; // Selecciona un frame de "Idle" en función de la orientación de Rick
         }else if(rick.getState().equals(State.WALKING)){
-            rickFrame = rick.isFacingLeft() ? walkLeftAnimation.getKeyFrame(rick.getRunStateTime(), true) : walkRightAnimation.getKeyFrame(rick.getRunStateTime(), true);
+            rickFrame = rick.isFacingLeft() ? walkLeftAnimation.getKeyFrame(rick.getRunStateTime(), true)
+                    : walkRightAnimation.getKeyFrame(rick.getRunStateTime(), true);
+
+
+
 		}else if(rick.getState().equals(State.JUMPING)){
             if (rick.getVelocity().y > 0){
 //				rickFrame = rick.isFacingLeft() ? rickJumpLeft : rickJumpRight;

@@ -41,8 +41,8 @@ public class TextureSetup {
 		input.close();
 		
 		if(dir == 1){ // Local
-			params[0] = "F:/Android/prueba2/android/assets/images/";
-		}else if(dir == 2){ // Repositorio
+			params[0] = "/home/jelly/Imágenes/prueba2/android/assets/images/";
+		}else if(dir == 2){ // Repositori
 			params[0] = "C:/Users/JC/gitEclipse/LearnWithRick/Learn With Rick-android/assets/images/";
 		}else{
 			System.out.println("Dirección no válida");

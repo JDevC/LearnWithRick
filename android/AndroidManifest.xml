@@ -17,18 +17,13 @@
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
-        </activity>
-        <!-- Splash screen de inicio -->
-        <activity
-            android:name="com.oddland.game.android.SplashScreenActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Splash screen de inicio -->
+
     </application>
 
 </manifest>

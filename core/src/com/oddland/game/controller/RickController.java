@@ -70,24 +70,24 @@ public class RickController{
 //    }
 	// ** Key presses and touches **************** //
 	public void leftPressed(){
-		keys.get(keys.put(Keys.LEFT, true));
-	}
-	public void rightPressed(){
-		keys.get(keys.put(Keys.RIGHT, true));
-	}
-	public void jumpPressed(){
-		keys.get(keys.put(Keys.JUMP, true));
-	}
-	public void firePressed(){
+        keys.get(keys.put(Keys.LEFT, true));
+    }
+    public void rightPressed(){
+        keys.get(keys.put(Keys.RIGHT, true));
+    }
+    public void jumpPressed(){
+        keys.get(keys.put(Keys.JUMP, true));
+    }
+    public void firePressed(){
         keys.get(keys.put(Keys.FIRE, true));
-	}
-	public void leftReleased(){
-		keys.get(keys.put(Keys.LEFT, false));
-	}
-	public void rightReleased(){
-		keys.get(keys.put(Keys.RIGHT, false));
-	}
-	public void jumpReleased(){
+    }
+    public void leftReleased(){
+        keys.get(keys.put(Keys.LEFT, false));
+    }
+    public void rightReleased(){
+        keys.get(keys.put(Keys.RIGHT, false));
+    }
+    public void jumpReleased(){
 		keys.get(keys.put(Keys.JUMP, false));
 		jumpingPressed = false;
 	}

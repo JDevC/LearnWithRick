@@ -17,8 +17,11 @@ public class Rick{
 	private State		state = State.IDLE;				        // Estado del personaje
 	private boolean		facingLeft = true;				        // Orientación en pantalla del personaje
 	private float		runStateTime = 0,
+                        shootStateTime = 0,
                         jumpStateTime = 0,
-                        fallStateTime = 0;
+                        fallStateTime = 0,
+                        shootJumpStateTime = 0,
+                        shootFallStateTime = 0;
 //	private boolean		longJump = false;				        // Modificador del salto (sin implementar)
 	// Atributos de vida
 	private int maxLife = 4;							        // Vida máxima del personaje
@@ -40,8 +43,11 @@ public class Rick{
 	public Rectangle getBounds(){ return this.bounds; }
 	public State getState(){ return this.state; }
 	public float getRunStateTime(){ return this.runStateTime; }
+    public float getShootStateTime(){ return this.shootStateTime;}
     public float getJumpStateTime(){ return this.jumpStateTime; }
     public float getFallStateTime(){ return this.fallStateTime; }
+    public float getShootJumpStateTime(){ return this.shootJumpStateTime; }
+    public float getShootFallStateTime(){ return this.shootFallStateTime; }
 	public int getLife(){ return this.life; }
 	public int getMaxLife(){ return this.maxLife; }
 	// Setters
@@ -59,8 +65,11 @@ public class Rick{
 	public void setVelocity(Vector2 velocity){ this.velocity = velocity; }
 	public void setBounds(Rectangle bounds){ this.bounds = bounds; }
 	public void setRunStateTime(float runStateTime){ this.runStateTime = runStateTime; }
+    public void setShootStateTime(float shootStateTime){ this.shootStateTime = shootStateTime; }
     public void setJumpStateTime(float jumpStateTime){ this.jumpStateTime = jumpStateTime; }
     public void setFallStateTime(float fallStateTime){ this.fallStateTime = fallStateTime; }
+    public void setShootJumpStateTime(){ this.shootJumpStateTime = shootJumpStateTime; }
+    public void setShootFallStateTime(){ this.shootFallStateTime = shootFallStateTime; }
 	// Comprobadores
 //	public boolean isLongJump(){ return this.longJump; }
 	public boolean isFacingLeft(){ return this.facingLeft; }
@@ -82,9 +91,13 @@ public class Rick{
             this.runStateTime = 0;
             this.jumpStateTime = 0;
             this.fallStateTime = 0;
+            this.shootStateTime = 0;
         }
         if(getState().equals(State.WALKING)){
             this.runStateTime += delta;
+        }
+        if(getState().equals(State.SHOOTING)){
+            this.shootStateTime += delta;
         }
         // Control de tiempos en el salto (necesario para la animación)
         if(getState().equals(State.JUMPING) && getVelocity().y > 0.5){
@@ -96,6 +109,8 @@ public class Rick{
             this.jumpStateTime = 0;
             this.fallStateTime += delta;
         }
+
+
 //        System.out.println("VelX: "+getVelocity().x+"; VelY: "+getVelocity().y);
 	}
 }

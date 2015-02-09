@@ -1,0 +1,41 @@
+
+tituloDef.pack.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+exit
+  rotate: false
+  xy: 738, 348
+  size: 116, 59
+  orig: 116, 59
+  offset: 0, 0
+  index: -1
+moniaco
+  rotate: false
+  xy: 498, 2
+  size: 238, 405
+  orig: 238, 405
+  offset: 0, 0
+  index: -1
+options
+  rotate: false
+  xy: 2, 115
+  size: 192, 62
+  orig: 192, 62
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 2, 54
+  size: 116, 59
+  orig: 116, 59
+  offset: 0, 0
+  index: -1
+titulo
+  rotate: false
+  xy: 2, 179
+  size: 494, 228
+  orig: 494, 228
+  offset: 0, 0
+  index: -1
