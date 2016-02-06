@@ -5,18 +5,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;*/
-// Paquetes propios
+// Our own classes
 import com.oddland.game.screens.GameScreen;
 import com.oddland.game.screens.TitleScreen;
-// Librer�a GDX
+// GDX library
 import com.badlogic.gdx.Game;
 
 public class LearnWithRick extends Game{
-    // Atributos de pantalla
+    // Screen attributes
     public TitleScreen titleScreen = null;
     public GameScreen gameScreen = null;
 
-    // Método para cargar la pantalla pertinente
+    // Screen load method
     @Override
     public void create() {
         titleScreen = new TitleScreen(this);
@@ -24,7 +24,7 @@ public class LearnWithRick extends Game{
 //		gameScreen = new GameScreen(this);
 //		this.setScreen(gameScreen);
     }
-    // M굯do para liberar memoria al finalizar
+    // Memory release method
     @Override
     public void dispose() {
         super.dispose();
