@@ -32,57 +32,57 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class WorldRenderer{
 	/** Medidas de la cámara **/
-	public static final float	CAMERA_WIDTH = 10f; 				// Longitud de la cámara (96f = longitud total ; 10f = longitud adecuada)
-	public static final float	CAMERA_HEIGHT = 7f; 				// Altura de la cámara (23f = altura total ; 7f = altura adecuada)
+	public static final float	CAMERA_WIDTH = 10f; 			// Longitud de la cámara (96f = longitud total ; 10f = longitud adecuada)
+	public static final float	CAMERA_HEIGHT = 7f; 			// Altura de la cámara (23f = altura total ; 7f = altura adecuada)
 	private static final float	RUNNING_FRAME_DURATION = 0.08f; 	// Controla el tiempo de duración de los frames en el ciclo de carrera (0.06f)
-	private static final float	JUMPING_FRAME_DURATION = 0.2f; 	    // Controla el tiempo de duración de los frames en el ciclo de salto // 0.4f
-    private static final float	TIZA_FRAME_DURATION = 0.2f; 	    // Controla el tiempo de duración de los frames en el ciclo de salto // 0.4f
+	private static final float	JUMPING_FRAME_DURATION = 0.2f;		// Controla el tiempo de duración de los frames en el ciclo de salto // 0.4f
+    	private static final float	TIZA_FRAME_DURATION = 0.2f;		// Controla el tiempo de duración de los frames en el ciclo de salto // 0.4f
 	
 	/** Variables del mundo y la cámara **/
-	private World 				world;
+	private World 			world;
 	private OrthographicCamera 	cam;
-	float                       rickPosX, rickPosY;				        // Coordenadas del personaje
-	ShapeRenderer               debugRenderer = new ShapeRenderer();	// Renderizador para las áreas de colisión
+	float                       	rickPosX, rickPosY;			// Coordenadas del personaje
+	ShapeRenderer               	debugRenderer = new ShapeRenderer();	// Renderizador para las áreas de colisión
 	
 	/** Textos en pantalla **/
 //	private BitmapFont deletreador = new BitmapFont();
 	
 	/** Texturas **/
-	private Texture				background;								        // Fondo gráfico de la pantalla
-	private TextureRegion 		rickFrame; 								        // TextureRegion de Rick a renderizar en el momento actual
-    private TextureRegion       tizaFrame;                                      // TextureRegion de Tiza Letal a renderizar en el momento actual
-	private TextureRegion 		blockTexture;							        // Bloques
-	private TextureRegion		checkPoint;								        // Puntos de control
-	private TextureRegion		potTxt;									        // Potes de vida
-//	private TextureRegion		tizaTxt;								        // Tizas letales
-	private TextureRegion 		rickIdleLeft, rickIdleRight,                    // Texturas de Rick estático
-                                rickShootIdleLeft,                              // Estático disparando hacia la izquierda
-                                rickShootIdleRight;			                    // Estático disparando hacia la derecha
-	private TextureRegion[] 	walkRightFrames, walkLeftFrames,		        // Rick en carrera
-								jumpRightFrames, jumpLeftFrames,		        // Rick en salto
-								fallRightFrames, fallLeftFrames,                // Rick en caída
-                                shootJumpRightFrames,                           // Rick en disparo y salto simultáneos hacia la derecha
-                                shootJumpLeftFrames,                            // Rick en disparo y salto simultáneos hacia la izquierda
-                                shootFallRightFrames,                           // Rick en disparo y caída simultáneos hacia la derecha
-                                shootFallLeftFrames;                            // Rick en disparo y caída simultáneos hacia la izquierda
-    private TextureRegion[]     tizaIzdaTxt, tizaDchaTxt;                       // Tiza en movimiento
+	private Texture			background;					// Fondo gráfico de la pantalla
+	private TextureRegion 		rickFrame;					// TextureRegion de Rick a renderizar en el momento actual
+	private TextureRegion		tizaFrame;					// TextureRegion de Tiza Letal a renderizar en el momento actual
+	private TextureRegion 		blockTexture;					// Bloques
+	private TextureRegion		checkPoint;					// Puntos de control
+	private TextureRegion		potTxt;						// Potes de vida
+//	private TextureRegion		tizaTxt;					// Tizas letales
+	private TextureRegion 		rickIdleLeft, rickIdleRight,            	// Texturas de Rick estático
+                                	rickShootIdleLeft,                      	// Estático disparando hacia la izquierda
+                                	rickShootIdleRight;				// Estático disparando hacia la derecha
+	private TextureRegion[] 	walkRightFrames, walkLeftFrames,		// Rick en carrera
+					jumpRightFrames, jumpLeftFrames,		// Rick en salto
+					fallRightFrames, fallLeftFrames,        	// Rick en caída
+                                	shootJumpRightFrames,                           // Rick en disparo y salto simultáneos hacia la derecha
+                                	shootJumpLeftFrames,                            // Rick en disparo y salto simultáneos hacia la izquierda
+                                	shootFallRightFrames,                           // Rick en disparo y caída simultáneos hacia la derecha
+                                	shootFallLeftFrames;                            // Rick en disparo y caída simultáneos hacia la izquierda
+    	private TextureRegion[]		tizaIzdaTxt, tizaDchaTxt;                       // Tiza en movimiento
 	private TextureRegion		arrowLeft, arrowRight, jumpButton, shootButton; // Joypad
-	private TextureRegion		lifePoint, lifelessPoint;				        // Puntos de vida
-	private TextureAtlas		atlas, joypad;							        // Mapas de texturas del juego
+	private TextureRegion		lifePoint, lifelessPoint;			// Puntos de vida
+	private TextureAtlas		atlas, joypad;					// Mapas de texturas del juego
 	
-	/** Animaciones **/
-	private Animation 			walkLeftAnimation, walkRightAnimation;	// Animaciones de Rick en carrera
-	private Animation 			jumpLeftAnimation, jumpRightAnimation;	// Animaciones de Rick en salto
-	private Animation			fallLeftAnimation, fallRightAnimation;	// Animaciones de Rick en caída
-    private Animation 			tizaLeftAnimation, tizaRightAnimation;	// Animaciones de tiza
-	private SpriteBatch 		batch; 									// Se encarga del mapeado e impresión de los objetos del juego
-	private boolean 			debug = false; 							// Estado para determinar si se muestran las áreas de colisión o no
+	/** Animaciones **/	
+	private Animation 		walkLeftAnimation, walkRightAnimation;		// Animaciones de Rick en carrera
+	private Animation 		jumpLeftAnimation, jumpRightAnimation;		// Animaciones de Rick en salto
+	private Animation		fallLeftAnimation, fallRightAnimation;		// Animaciones de Rick en caída
+    	private Animation 		tizaLeftAnimation, tizaRightAnimation;		// Animaciones de tiza
+	private SpriteBatch 		batch; 						// Se encarga del mapeado e impresión de los objetos del juego
+	private boolean 		debug = false; 					// Estado para determinar si se muestran las áreas de colisión o no
 	
 	/** Dimensiones de la pantalla **/
-	private int 				width;  		// Anchura de pantalla en pixels
-	private int 				height; 		// Altura de pantalla en pixels
-	private float 				ppuX = 0;		// pixels por unidad en el eje X
-	private float 				ppuY = 0;		// pixels por unidad en el eje Y
+	private int 			width;  					// Anchura de pantalla en pixels
+	private int 			height; 					// Altura de pantalla en pixels
+	private float 			ppuX = 0;					// pixels por unidad en el eje X
+	private float 			ppuY = 0;					// pixels por unidad en el eje Y
 	
 	// CONSTRUCTOR ------------------------------------------------------------------------------------------
 	public WorldRenderer(World world, boolean debug){
